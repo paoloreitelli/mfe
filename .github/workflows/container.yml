@@ -42,5 +42,6 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_default_region: ${{ vars.AWS_DEFAULT_REGION }}
           aws_resource_identifier: ${{ vars.AWS_S3_BUCKET_NAME }}
+          aws_site_website_bucket: ${{ vars.AWS_S3_BUCKET_NAME }}
           checkout: false
           aws_site_source_folder: packages/container/dist
