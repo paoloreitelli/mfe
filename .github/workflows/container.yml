@@ -45,3 +45,6 @@ jobs:
           aws_site_bucket_name: ${{ vars.AWS_S3_BUCKET_NAME }}
           checkout: false
           aws_site_source_folder: packages/container/dist
+          tf_action: 'apply'
+          tf_state_bucket_destroy: true
+          
