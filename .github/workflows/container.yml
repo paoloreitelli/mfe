@@ -43,4 +43,4 @@ jobs:
           aws_default_region: ${{ vars.AWS_DEFAULT_REGION }}
           aws_resource_identifier: ${{ vars.AWS_S3_BUCKET_NAME }}
           checkout: false
-          aws_site_source_folder: dist
+          aws_site_source_folder: packages/container/dist
