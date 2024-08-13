@@ -42,7 +42,7 @@ jobs:
       - name: Deploy
         uses: reggionick/s3-deploy@v3
         with:
-          folder: packages/container/dist
+          folder: packages/marketing/dist
           bucket: ${{ vars.AWS_S3_MARKETING_BUCKET_NAME }}
           bucket-region: ${{ vars.AWS_DEFAULT_REGION }}
           delete-removed: true
