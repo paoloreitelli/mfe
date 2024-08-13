@@ -40,11 +40,12 @@ jobs:
       - run: npm run build
 
       - name: Deploy
-        uses:  reggionick/s3-deploy@v3
+        uses: reggionick/s3-deploy@v3
         with:
           folder: packages/container/dist
-          bucket:  ${{ vars.AWS_S3_BUCKET_NAME }}
+          bucket: ${{ vars.AWS_S3_BUCKET_NAME }}
           bucket-region: ${{ vars.AWS_DEFAULT_REGION }}
           delete-removed: true
           filesToInclude: ".*/*,*/*,**"
-            
+          dist-id: ${{ vars.AWS_DISTRIBUTION_ID }}
+          invalidation: "/index.html"
