@@ -35,19 +35,20 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@master
       - run: npm install
       - run: npm run build
         env:
           PRODUCTION_DOMAIN: ${{ vars.PRODUCTION_DOMAIN }}
-
+  
       - name: Deploy
-        uses: reggionick/s3-deploy@v3
+        uses: jakejarvis/s3-sync-action@master
         with:
-          folder: packages/container/dist
-          bucket: ${{ vars.AWS_S3_CONTAINER_BUCKET_NAME }}
-          bucket-region: ${{ vars.AWS_DEFAULT_REGION }}
-          delete-removed: true
-          filesToInclude: ".*/*,*/*,**"
-          dist-id: ${{ vars.AWS_DISTRIBUTION_ID }}
-          invalidation: "/index.html"
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ vars.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ vars.AWS_DEFAULT_REGION }}
+          SOURCE_DIR: 'dist'      
+          DEST_DIR:  'container/latest'
