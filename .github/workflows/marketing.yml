@@ -1,11 +1,11 @@
-name: deploy-container
+name: deploy-marketing
 
 on:
   push:
     branches:
       - main
     paths:
-      - "packages/container/**"
+      - "packages/marketing/**"
   workflow_dispatch:
     inputs:
       logLevel:
@@ -24,7 +24,7 @@ on:
 
 defaults:
   run:
-    working-directory: packages/container
+    working-directory: packages/marketing
 
 jobs:
   build:
@@ -38,16 +38,12 @@ jobs:
       - uses: actions/checkout@v3
       - run: npm install
       - run: npm run build
-        env:
-          PRODUCTION_DOMAIN: ${{ vars.PRODUCTION_DOMAIN }}
 
       - name: Deploy
         uses: reggionick/s3-deploy@v3
         with:
           folder: packages/container/dist
-          bucket: ${{ vars.AWS_S3_CONTAINER_BUCKET_NAME }}
+          bucket: ${{ vars.AWS_S3_MARKETING_BUCKET_NAME }}
           bucket-region: ${{ vars.AWS_DEFAULT_REGION }}
           delete-removed: true
           filesToInclude: ".*/*,*/*,**"
-          dist-id: ${{ vars.AWS_DISTRIBUTION_ID }}
-          invalidation: "/index.html"
