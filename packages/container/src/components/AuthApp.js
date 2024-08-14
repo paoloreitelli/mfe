@@ -8,16 +8,14 @@ export default function AuthApp({ onSignIn }) {
 
   useEffect(() => {
     const { onParentNavigate } = mount(ref.current, {
-      onNavigate: ({ pathname: nexPathname }) => {
+      initialPath: history.location.pathname,
+      onNavigate: ({ pathname: nextPathname }) => {
         const { pathname } = history.location;
-        if (pathname !== nexPathname) {
-          history.push(nexPathname);
+        if (pathname !== nextPathname) {
+          history.push(nextPathname);
         }
       },
-      initialPath: history.location.pathname,
-      onSignIn: () => {
-        onSignIn();
-      },
+      onSignIn: onSignIn,
     });
     history.listen(onParentNavigate);
   }, []);
