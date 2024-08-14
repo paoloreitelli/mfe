@@ -1,10 +1,10 @@
-import React from "react";
+import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { createMemoryHistory, createBrowserHistory } from "history";
 
 //Mount function to startup the App
-const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
+const mount = (el, { onNavigate, defaultHistory, initialPath, onSignIn }) => {
   const history =
     defaultHistory ||
     createMemoryHistory({
@@ -12,7 +12,12 @@ const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
     });
 
   if (onNavigate) history.listen(onNavigate);
-  ReactDOM.render(<App history={history}></App>, el);
+  ReactDOM.render(
+    <StrictMode>
+      <App onSignIn={onSignIn} history={history}></App>
+    </StrictMode>,
+    el
+  );
 
   return {
     onParentNavigate({ pathname: nextPathname }) {
@@ -26,7 +31,7 @@ const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
 
 //If we are in development and  isolation call immediatly the mount
 if (process.env.NODE_ENV === "development") {
-  const devRoot = document.querySelector("#marketing-development");
+  const devRoot = document.querySelector("#auth-development");
   if (devRoot) mount(devRoot, { defaultHistory: createBrowserHistory() });
 }
 export { mount };

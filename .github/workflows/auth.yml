@@ -1,11 +1,11 @@
-name: deploy-marketing
+name: deploy-auth
 
 on:
   push:
     branches:
       - main
     paths:
-      - "packages/marketing/**"
+      - "packages/auth/**"
   workflow_dispatch:
     inputs:
       logLevel:
@@ -24,7 +24,7 @@ on:
 
 defaults:
   run:
-    working-directory: packages/marketing
+    working-directory: packages/auth
 
 jobs:
   build:
@@ -50,5 +50,5 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ vars.AWS_DEFAULT_REGION }}
-          SOURCE_DIR: "packages/marketing/dist"
-          DEST_DIR: "marketing/latest"
+          SOURCE_DIR: "packages/auth/dist"
+          DEST_DIR: "auth/latest"
